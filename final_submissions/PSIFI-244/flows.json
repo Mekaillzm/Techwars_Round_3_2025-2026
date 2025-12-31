@@ -1,0 +1,334 @@
+[
+    {
+        "id": "5138c1c5e3b4b997",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d1e595b63a4e42c2",
+        "type": "inject",
+        "z": "5138c1c5e3b4b997",
+        "name": "Start",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 70,
+        "y": 260,
+        "wires": [
+            [
+                "2d70ba527c930b1c"
+            ]
+        ]
+    },
+    {
+        "id": "df74881284d4f7cd",
+        "type": "debug",
+        "z": "5138c1c5e3b4b997",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 100,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "2d70ba527c930b1c",
+        "type": "http request",
+        "z": "5138c1c5e3b4b997",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "User-Agent: Node-RED Accept: application/json",
+                "valueType": "other",
+                "valueValue": ""
+            }
+        ],
+        "x": 210,
+        "y": 260,
+        "wires": [
+            [
+                "df74881284d4f7cd",
+                "29c5ebd7aea7d250",
+                "04e28684674b8b60"
+            ]
+        ]
+    },
+    {
+        "id": "29c5ebd7aea7d250",
+        "type": "function",
+        "z": "5138c1c5e3b4b997",
+        "name": "Google sheet formatting  ",
+        "func": "// Convert API response object to an array\nlet dataArray = Object.values(msg.payload);\n\n// Map the data to match your Google Sheet columns\nlet sheetData = dataArray.map(item => [\n    item.id || \"\",\n    item.symbol || \"\",\n    item.name || \"\",\n    item.current_price || \"\",\n    item.market_cap || \"\",\n    item.total_volume || \"\",\n    item.high_24h || \"\",\n    item.low_24h || \"\",\n    item.price_change_percentage_24h || \"\"\n]);\n\n// Add headers (optional, only if you want them in your sheet)\nlet headers = [\"id\", \"symbol\", \"name\", \"current_price\", \"market_cap\", \"total_volume\", \"high_24h\", \"low_24h\", \"price_change_percentage_24h\"];\nsheetData.unshift(headers);\n\n// Set payload for Google Sheets node\nmsg.payload = sheetData;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 240,
+        "wires": [
+            [
+                "db2244fb0e5cc70b",
+                "82a13ddf6551ef1d"
+            ]
+        ]
+    },
+    {
+        "id": "82a13ddf6551ef1d",
+        "type": "GSheet",
+        "z": "5138c1c5e3b4b997",
+        "creds": "3e6a9d8ec489c37d",
+        "method": "update",
+        "action": "",
+        "sheet": "1gxyAOLPZu2-TXVJuKYRadl8MR79MU8qTJj6IfBsSniQ",
+        "cells": "Sheet1!A1:K250",
+        "flatten": false,
+        "name": "Cryptocurrency",
+        "x": 960,
+        "y": 220,
+        "wires": [
+            [
+                "6a81609e08f13c76"
+            ]
+        ]
+    },
+    {
+        "id": "db2244fb0e5cc70b",
+        "type": "debug",
+        "z": "5138c1c5e3b4b997",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 320,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "6a81609e08f13c76",
+        "type": "debug",
+        "z": "5138c1c5e3b4b997",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "04e28684674b8b60",
+        "type": "function",
+        "z": "5138c1c5e3b4b997",
+        "name": "Extract Price ",
+        "func": "// Example API response:\n// { \"price\": \"43250.12\" }\n\nlet price = Number(msg.payload.price);\n\nmsg.payload = price;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 320,
+        "wires": [
+            [
+                "24d6c29e9dd99476",
+                "97c27769b393cbaf"
+            ]
+        ]
+    },
+    {
+        "id": "904f1ea73c196f8e",
+        "type": "inject",
+        "z": "5138c1c5e3b4b997",
+        "name": "1h interval ",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 90,
+        "y": 420,
+        "wires": [
+            [
+                "f069f115c0a5eaaf"
+            ]
+        ]
+    },
+    {
+        "id": "24d6c29e9dd99476",
+        "type": "function",
+        "z": "5138c1c5e3b4b997",
+        "name": "Collect price / data buffer ",
+        "func": "let prices = context.get(\"prices\") || [];\n\n// Store price with timestamp\nprices.push({\n    price: msg.payload,\n    time: Date.now()\n});\n\ncontext.set(\"prices\", prices);\n\n// Stop flow here\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 340,
+        "wires": [
+            [
+                "2d1814cff51875a0"
+            ]
+        ]
+    },
+    {
+        "id": "f069f115c0a5eaaf",
+        "type": "function",
+        "z": "5138c1c5e3b4b997",
+        "name": "1h average + TIme ",
+        "func": "// Get collected prices\nlet prices = context.get(\"prices\") || [];\nif (prices.length === 0) return null;\n\n// Calculate average\nlet sum = prices.reduce((acc,obj)=>acc+obj.price,0);\nlet avg = sum / prices.length;\n\n// Add timestamp\nlet timestamp = new Date().toISOString();\n\n// Build object\nlet avgObj = {\n    time: timestamp,\n    average_price: avg\n};\n\n// Store in context for full history (optional)\nlet averages = context.get(\"averages\") || [];\naverages.push(avgObj);\ncontext.set(\"averages\", averages);\n\n// Clear current hour prices\ncontext.set(\"prices\", []);\n\n// Output for Google Sheets / JSON API\nmsg.payload = avgObj;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 460,
+        "wires": [
+            [
+                "b0ea428f38aac1a1",
+                "780b1bcf4e42a688"
+            ]
+        ]
+    },
+    {
+        "id": "780b1bcf4e42a688",
+        "type": "GSheet",
+        "z": "5138c1c5e3b4b997",
+        "creds": "3e6a9d8ec489c37d",
+        "method": "append",
+        "action": "",
+        "sheet": "1gxyAOLPZu2-TXVJuKYRadl8MR79MU8qTJj6IfBsSniQ",
+        "cells": "Sheet1!J1:J",
+        "flatten": false,
+        "name": "Append Column ",
+        "x": 940,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "97c27769b393cbaf",
+        "type": "debug",
+        "z": "5138c1c5e3b4b997",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "2d1814cff51875a0",
+        "type": "debug",
+        "z": "5138c1c5e3b4b997",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "b0ea428f38aac1a1",
+        "type": "debug",
+        "z": "5138c1c5e3b4b997",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "3e6a9d8ec489c37d",
+        "type": "gauth",
+        "name": "crypto-currency@cryptocurrency-482702.iam.gserviceaccount.com"
+    },
+    {
+        "id": "2ac0be94934eb53d",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-google-sheets": "1.1.2"
+        }
+    }
+]
