@@ -1,0 +1,556 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3b4eee15e09f0787",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "START",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "30",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 200,
+        "wires": [
+            [
+                "8192c3ea1b906b10"
+            ]
+        ]
+    },
+    {
+        "id": "7aa777e6b9ae7918",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Parse HTTP",
+        "func": "// Coins you want to track\nconst coins = [\"bitcoin\", \"ethereum\", \"tether\", \"solana\", \"binancecoin\"];\n\n// CoinGecko response\nconst data = Object.values(msg.payload); // Converts object to array\n\nconst time = new Date();\n\n// Prepare rows for Google Sheets\nlet rows = [];\n\ndata.forEach(coin => {\n    if (coins.includes(coin.id)) {\n        rows.push([\n            coin.last_updated,\n            coin.current_price,\n            coin.market_cap,\n            coin.high_24h,\n            coin.low_24h,\n            coin.price_change_24h\n        ]);\n    }\n});\n\n// Google Sheets expects a 2D array\nmsg.payload = rows;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 200,
+        "wires": [
+            [
+                "883653f535b62262",
+                "f65d9297341216c5"
+            ]
+        ]
+    },
+    {
+        "id": "883653f535b62262",
+        "type": "GSheet",
+        "z": "f6f2187d.f17ca8",
+        "creds": "6b045f1b807ab168",
+        "method": "update",
+        "action": "",
+        "sheet": "1DHNvKF0EdXoFGxX2dGa2sTUWDSohf7YEaPBV0F3C9oY",
+        "cells": "Sheet1!B2:G12",
+        "flatten": false,
+        "name": "Append to Google Sheet",
+        "x": 1010,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f65d9297341216c5",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "0b63f653aae27e75",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "START",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "object",
+        "payloadType": "date",
+        "x": 80,
+        "y": 320,
+        "wires": [
+            [
+                "4e77eaa6e593f705"
+            ]
+        ]
+    },
+    {
+        "id": "87861b5d46a69f9c",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Parse HTTP",
+        "func": "// Coins you want to track\nconst coins = [\"bitcoin\", \"ethereum\", \"tether\", \"solana\", \"binancecoin\"];\n\n// CoinGecko response\nconst data = Object.values(msg.payload); // Converts object to array\n\n\nconst time = new Date();\n\n\n// Prepare rows for Google Sheets\nlet rows = [];\n\ndata.forEach(coin => {\n    if (coins.includes(coin.id)) {\n        rows.push([\n            new Date(coin.last_updated).toISOString().replace('T', ' ').substring(0, 19),\n            coin.name,\n            coin.current_price,\n            coin.market_cap\n        ]);\n    }\n});\n\n// Google Sheets expects a 2D array\nmsg.payload = rows;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 320,
+        "wires": [
+            [
+                "3177a70fbf537d4f",
+                "295f52d5e574553c"
+            ]
+        ]
+    },
+    {
+        "id": "3177a70fbf537d4f",
+        "type": "GSheet",
+        "z": "f6f2187d.f17ca8",
+        "creds": "6b045f1b807ab168",
+        "method": "append",
+        "action": "",
+        "sheet": "1DHNvKF0EdXoFGxX2dGa2sTUWDSohf7YEaPBV0F3C9oY",
+        "cells": "Sheet3!A1:D1500",
+        "flatten": false,
+        "name": "Append to Google Sheet",
+        "x": 990,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "295f52d5e574553c",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "4e77eaa6e593f705",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "GET from API",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 240,
+        "y": 320,
+        "wires": [
+            [
+                "87861b5d46a69f9c"
+            ]
+        ]
+    },
+    {
+        "id": "8192c3ea1b906b10",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "GET from API",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 260,
+        "y": 200,
+        "wires": [
+            [
+                "7aa777e6b9ae7918"
+            ]
+        ]
+    },
+    {
+        "id": "3048029f8405e568",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "START",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 80,
+        "y": 460,
+        "wires": [
+            [
+                "0176aa12f851562f"
+            ]
+        ]
+    },
+    {
+        "id": "0180564db643aa69",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Parse HTTP",
+        "func": "const coins = [\"bitcoin\", \"ethereum\", \"tether\", \"solana\", \"binancecoin\"];\n\nconst data = Object.values(msg.payload); // Converts object to array\n\n\nconst time = new Date();\n\nlet rows = [];\n\ndata.forEach(coin => {\n    if (coins.includes(coin.id)) {\n        rows.push([\n            coin.market_cap,\n        ]);\n    }\n});\n\nmsg.payload = rows;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 460,
+        "wires": [
+            [
+                "db297a46f4993f87",
+                "ff2392133f700e4d"
+            ]
+        ]
+    },
+    {
+        "id": "db297a46f4993f87",
+        "type": "GSheet",
+        "z": "f6f2187d.f17ca8",
+        "creds": "6b045f1b807ab168",
+        "method": "update",
+        "action": "",
+        "sheet": "1DHNvKF0EdXoFGxX2dGa2sTUWDSohf7YEaPBV0F3C9oY",
+        "cells": "Sheet1!B9:B13",
+        "flatten": false,
+        "name": "Append to Google Sheet",
+        "x": 990,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ff2392133f700e4d",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "0176aa12f851562f",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "GET from API",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 240,
+        "y": 460,
+        "wires": [
+            [
+                "0180564db643aa69"
+            ]
+        ]
+    },
+    {
+        "id": "d39d2a31d33feb3d",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "START",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "object",
+        "payloadType": "date",
+        "x": 80,
+        "y": 600,
+        "wires": [
+            [
+                "70562ea01803326d"
+            ]
+        ]
+    },
+    {
+        "id": "1a27d9db634b14cd",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Parse HTTP",
+        "func": "// Coins you want to track\nconst coins = [\"bitcoin\"];\n\n// CoinGecko response\nconst data = Object.values(msg.payload); // Converts object to array\n\n\nconst time = new Date();\n\n// Prepare rows for Google Sheets\nlet rows = [];\n\ndata.forEach(coin => {\n    if (coins.includes(coin.id)) {\n        rows.push([\n            new Date(coin.last_updated).toISOString().replace('T', ' ').substring(0, 19),\n            coin.current_price,\n            coin.name\n        ]);\n    }\n});\n\n// Google Sheets expects a 2D array\nmsg.payload = rows;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 600,
+        "wires": [
+            [
+                "c251295904d1fca6",
+                "a3300a540a687cb6"
+            ]
+        ]
+    },
+    {
+        "id": "c251295904d1fca6",
+        "type": "GSheet",
+        "z": "f6f2187d.f17ca8",
+        "creds": "6b045f1b807ab168",
+        "method": "append",
+        "action": "",
+        "sheet": "1DHNvKF0EdXoFGxX2dGa2sTUWDSohf7YEaPBV0F3C9oY",
+        "cells": "Sheet5!A2:C1000",
+        "flatten": false,
+        "name": "Append to Google Sheet",
+        "x": 990,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a3300a540a687cb6",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "70562ea01803326d",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "GET from API",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 240,
+        "y": 600,
+        "wires": [
+            [
+                "1a27d9db634b14cd"
+            ]
+        ]
+    },
+    {
+        "id": "574595a0b93b06bb",
+        "type": "GSheet",
+        "z": "f6f2187d.f17ca8",
+        "creds": "6b045f1b807ab168",
+        "method": "get",
+        "action": "",
+        "sheet": "1DHNvKF0EdXoFGxX2dGa2sTUWDSohf7YEaPBV0F3C9oY",
+        "cells": "Sheet5!A1:C1000",
+        "flatten": false,
+        "name": "",
+        "x": 230,
+        "y": 700,
+        "wires": [
+            [
+                "06fd036922b06554"
+            ]
+        ]
+    },
+    {
+        "id": "06fd036922b06554",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "function 1",
+        "func": "// msg.payload = array of rows from Raw Bitcoin sheet\n// Each row: [time, coin, price, market_cap]\n\nconst rawRows = msg.payload.filter(r => r[2] === \"Bitcoin\"); // filter Bitcoin only\n\nconst result = [];\n\nfor (let i = 0; i < rawRows.length; i += 10) {\n    const batch = rawRows.slice(i, i + 10);\n\n    if (batch.length === 0) continue;\n\n    // Compute average price\n    const sum = batch.reduce((acc, r) => acc + Number(r[1]), 0);\n    const avg = sum / batch.length;\n\n    // Use last timestamp in the batch as the time for the average\n    const time = batch[batch.length - 1][0];\n\n    // Push as [time, coin, avg_price]\n    result.push([time, \"Bitcoin\", avg]);\n}\n\nmsg.payload = result;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 700,
+        "wires": [
+            [
+                "c486a8cc7eee07be",
+                "229cf7dd7baf59b1"
+            ]
+        ]
+    },
+    {
+        "id": "8caa7aeb99d1f2bc",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 80,
+        "y": 700,
+        "wires": [
+            [
+                "574595a0b93b06bb"
+            ]
+        ]
+    },
+    {
+        "id": "c486a8cc7eee07be",
+        "type": "GSheet",
+        "z": "f6f2187d.f17ca8",
+        "creds": "6b045f1b807ab168",
+        "method": "update",
+        "action": "",
+        "sheet": "1DHNvKF0EdXoFGxX2dGa2sTUWDSohf7YEaPBV0F3C9oY",
+        "cells": "Sheet7!A2:C1000",
+        "flatten": false,
+        "name": "",
+        "x": 690,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "229cf7dd7baf59b1",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "6b045f1b807ab168",
+        "type": "gauth",
+        "name": "azlan-939@delta-sanctum-482616-a1.iam.gserviceaccount.com"
+    },
+    {
+        "id": "f786e58078b26d51",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-google-sheets": "1.1.2"
+        }
+    }
+]
