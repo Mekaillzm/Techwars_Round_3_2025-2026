@@ -1,0 +1,524 @@
+[
+    {
+        "id": "df9950235fcde793",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f1ec38a3413e8d14",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "bef6d22a4df8d5e5",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2ca785daa773585b",
+        "type": "tab",
+        "label": "Flow 4",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "31e028091a08d1f4",
+        "type": "tab",
+        "label": "Flow 5",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "flow1-realtime",
+        "type": "tab",
+        "label": "Real-time Flight Data",
+        "disabled": false
+    },
+    {
+        "id": "2a28b5d6e7ed67f9",
+        "type": "tab",
+        "label": "Flight Data Pipeline",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "736bf0c3f49bc6fc",
+        "type": "gauth",
+        "name": "flight-dashboard-bot@flightdashboard-482620.iam.gserviceaccount.com"
+    },
+    {
+        "id": "gsheet-creds",
+        "type": "gauth",
+        "name": "Google Service Account"
+    },
+    {
+        "id": "9c42a0ee9fc79aab",
+        "type": "inject",
+        "z": "df9950235fcde793",
+        "name": "Get Flight Data Every 30s",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "30",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 180,
+        "y": 80,
+        "wires": [
+            [
+                "74fd3d1c0880a725"
+            ]
+        ]
+    },
+    {
+        "id": "74fd3d1c0880a725",
+        "type": "http request",
+        "z": "df9950235fcde793",
+        "name": "OpenSky Flight API",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://opensky-network.org/api/states/all",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 550,
+        "y": 80,
+        "wires": [
+            [
+                "161a89e6f4f7256d"
+            ]
+        ]
+    },
+    {
+        "id": "161a89e6f4f7256d",
+        "type": "function",
+        "z": "df9950235fcde793",
+        "name": "Format Data",
+        "func": "const time = new Date();\nconst states = msg.payload.states;\nconst total = states ? states.length : 0;\n\nlet flight = \"N/A\", alt = 0, speed = 0, country = \"N/A\";\nif (states && states.length > 0) {\n    flight = states[0][1] || \"UNKNOWN\";\n    alt = states[0][7] || 0;\n    speed = states[0][9] || 0;\n    country = states[0][2] || \"Unknown\";\n}\n\nmsg.payload = `${time.toISOString()},${total},\"${flight}\",${alt},${speed},\"${country}\"\\n`;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 80,
+        "wires": [
+            [
+                "93daa3961a75a246",
+                "be5aed91f4f7f16e",
+                "b025844bc9c311a0"
+            ]
+        ]
+    },
+    {
+        "id": "be5aed91f4f7f16e",
+        "type": "debug",
+        "z": "df9950235fcde793",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "93daa3961a75a246",
+        "type": "file",
+        "z": "df9950235fcde793",
+        "name": "",
+        "filename": "/Users/muhammadahmed/Downloads/Techwars/flight_data.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1350,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b025844bc9c311a0",
+        "type": "GSheet",
+        "z": "df9950235fcde793",
+        "creds": "736bf0c3f49bc6fc",
+        "method": "append",
+        "action": "",
+        "sheet": "1bvP4R9NxlxT4LW_E0E_AzIRfELTSdNXo4R-1wFSAtSI",
+        "cells": "Sheet1!A:E",
+        "flatten": false,
+        "name": "",
+        "x": 530,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1bc0e836b3f5da3c",
+        "type": "inject",
+        "z": "f1ec38a3413e8d14",
+        "name": "Every 10 minutes",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 80,
+        "wires": [
+            [
+                "e4871394c26184dd"
+            ]
+        ]
+    },
+    {
+        "id": "e4871394c26184dd",
+        "type": "function",
+        "z": "f1ec38a3413e8d14",
+        "name": "Calculate Averages",
+        "func": "const avgAlt = Math.floor(Math.random() * 20000) + 25000;\nconst avgSpeed = Math.floor(Math.random() * 300) + 300;\n\nmsg.payload = `${new Date().toISOString()},${avgAlt},${avgSpeed}\\n`;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 80,
+        "wires": [
+            [
+                "1463a13b480ce5fa"
+            ]
+        ]
+    },
+    {
+        "id": "1463a13b480ce5fa",
+        "type": "file",
+        "z": "f1ec38a3413e8d14",
+        "name": "",
+        "filename": "/Users/muhammadahmed/Downloads/Techwars/flight_averages.csv",
+        "filenameType": "str",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 850,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "inject-realtime",
+        "type": "inject",
+        "z": "flow1-realtime",
+        "name": "Every 30 seconds",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "30",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 100,
+        "wires": [
+            [
+                "http-opensky"
+            ]
+        ]
+    },
+    {
+        "id": "http-opensky",
+        "type": "http request",
+        "z": "flow1-realtime",
+        "name": "OpenSky API",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://opensky-network.org/api/states/all",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 350,
+        "y": 100,
+        "wires": [
+            [
+                "function-format"
+            ]
+        ]
+    },
+    {
+        "id": "function-format",
+        "type": "function",
+        "z": "flow1-realtime",
+        "name": "Format Flight Data",
+        "func": "// Get current timestamp\nconst time = new Date();\n\n// Flight data from API\nconst states = msg.payload.states;\nconst total = states ? states.length : 0;\n\n// Get details from first flight\nlet flight = \"N/A\", alt = 0, speed = 0, country = \"N/A\";\nif (states && states.length > 0) {\n    flight = states[0][1] || \"UNKNOWN\";\n    alt = states[0][7] || 0;\n    speed = states[0][9] || 0;\n    country = states[0][2] || \"Unknown\";\n}\n\n// Store for averages\nlet altitudeArray = global.get(\"altitudeArray\") || [];\nlet speedArray = global.get(\"speedArray\") || [];\n\nif (alt > 0 && speed > 0) {\n    altitudeArray.push(alt);\n    speedArray.push(speed);\n    \n    // Keep last 20 readings (10 minutes at 30-second intervals)\n    if (altitudeArray.length > 20) altitudeArray.shift();\n    if (speedArray.length > 20) speedArray.shift();\n    \n    global.set(\"altitudeArray\", altitudeArray);\n    global.set(\"speedArray\", speedArray);\n}\n\n// Format for Google Sheets: Timestamp,TotalFlights,FlightNumber,Altitude,Speed,Country\nmsg.payload = [[\n    time.toISOString(),\n    total,\n    flight,\n    alt,\n    speed,\n    country\n]];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 100,
+        "wires": [
+            [
+                "gsheet-realtime"
+            ]
+        ]
+    },
+    {
+        "id": "gsheet-realtime",
+        "type": "GSheet",
+        "z": "flow1-realtime",
+        "creds": "gsheet-creds",
+        "method": "append",
+        "action": "",
+        "sheet": "1bvP4R9NxlxT4LW_E0E_AzIRfELTSdNXo4R-1wFSAtSI",
+        "cells": "RealTime!A:F",
+        "flatten": false,
+        "name": "Save to Google Sheets",
+        "x": 750,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ee6578bad2e8f7c5",
+        "type": "comment",
+        "z": "2a28b5d6e7ed67f9",
+        "name": "REAL-TIME FLIGHT DATA (Every 30 seconds)",
+        "info": "",
+        "x": 320,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "675dd3ccc7150a3e",
+        "type": "inject",
+        "z": "2a28b5d6e7ed67f9",
+        "name": "Every 30 seconds",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "30",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 90,
+        "y": 140,
+        "wires": [
+            [
+                "dfcb4fcde5234315"
+            ]
+        ]
+    },
+    {
+        "id": "dfcb4fcde5234315",
+        "type": "http request",
+        "z": "2a28b5d6e7ed67f9",
+        "name": "OpenSky Flight API",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://opensky-network.org/api/states/all",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 280,
+        "y": 140,
+        "wires": [
+            [
+                "77813fb31e86eb64"
+            ]
+        ]
+    },
+    {
+        "id": "77813fb31e86eb64",
+        "type": "function",
+        "z": "2a28b5d6e7ed67f9",
+        "name": "Format Flight Data",
+        "func": "// Get current timestamp\nconst time = new Date();\n\n// Flight data from API\nconst states = msg.payload.states;\nconst totalFlights = states ? states.length : 0;\n\n// Get details from first flight\nlet flightNumber = \"N/A\";\nlet altitude = 0;\nlet speed = 0;\nlet country = \"N/A\";\n\nif (states && states.length > 0) {\n    const flight = states[0];\n    flightNumber = flight[1]?.trim() || \"UNKNOWN\";\n    altitude = flight[7] || 0;\n    speed = flight[9] || 0;\n    country = flight[2] || \"Unknown\";\n}\n\n// Store for averages\nlet altitudeArray = global.get(\"altitudeArray\") || [];\nlet speedArray = global.get(\"speedArray\") || [];\n\naltitudeArray.push(altitude);\nspeedArray.push(speed);\n\n// Keep last 20 readings (10 minutes at 30-second intervals)\nif (altitudeArray.length > 20) altitudeArray.shift();\nif (speedArray.length > 20) speedArray.shift();\n\nglobal.set(\"altitudeArray\", altitudeArray);\nglobal.set(\"speedArray\", speedArray);\n\n// Format for Google Sheets: Timestamp, TotalFlights, FlightNumber, Altitude, Speed, Country\nmsg.payload = [[\n    time.toISOString(),\n    totalFlights,\n    flightNumber,\n    altitude,\n    speed,\n    country\n]];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 140,
+        "wires": [
+            [
+                "f44b2f379733e35d"
+            ]
+        ]
+    },
+    {
+        "id": "f44b2f379733e35d",
+        "type": "GSheet",
+        "z": "2a28b5d6e7ed67f9",
+        "creds": "gsheet-creds",
+        "method": "append",
+        "action": "",
+        "sheet": "1bvP4R9NxlxT4LW_E0E_AzIRfELTSdNXo4R-1wFSAtSI",
+        "cells": "RealTime!A:F",
+        "flatten": false,
+        "name": "Save to Google Sheets",
+        "x": 700,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3aba0a4aed20611d",
+        "type": "comment",
+        "z": "2a28b5d6e7ed67f9",
+        "name": "AVERAGES CALCULATION (Every 10 minutes) | TECHWARS CHALLENGE",
+        "info": "",
+        "x": 320,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "5cad03f527c16f7a",
+        "type": "inject",
+        "z": "2a28b5d6e7ed67f9",
+        "name": "Every 10 minutes",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 90,
+        "y": 300,
+        "wires": [
+            [
+                "1077159f25678ed5"
+            ]
+        ]
+    },
+    {
+        "id": "1077159f25678ed5",
+        "type": "function",
+        "z": "2a28b5d6e7ed67f9",
+        "name": "Calculate Averages",
+        "func": "// Get stored arrays\nconst altitudeArray = global.get(\"altitudeArray\") || [];\nconst speedArray = global.get(\"speedArray\") || [];\n\n// Calculate averages\nlet avgAltitude = 0;\nlet avgSpeed = 0;\n\nif (altitudeArray.length > 0) {\n    const sumAlt = altitudeArray.reduce((a, b) => a + b, 0);\n    avgAltitude = Math.round(sumAlt / altitudeArray.length);\n}\n\nif (speedArray.length > 0) {\n    const sumSpeed = speedArray.reduce((a, b) => a + b, 0);\n    avgSpeed = Math.round(sumSpeed / speedArray.length);\n}\n\n// Format for Google Sheets: Timestamp, AverageAltitude, AverageSpeed\nmsg.payload = [[\n    new Date().toISOString(),\n    avgAltitude,\n    avgSpeed\n]];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 300,
+        "wires": [
+            [
+                "c4d3dc25ad883935"
+            ]
+        ]
+    },
+    {
+        "id": "c4d3dc25ad883935",
+        "type": "GSheet",
+        "z": "2a28b5d6e7ed67f9",
+        "creds": "gsheet-creds",
+        "method": "append",
+        "action": "",
+        "sheet": "1bvP4R9NxlxT4LW_E0E_AzIRfELTSdNXo4R-1wFSAtSI",
+        "cells": "Averages!A:C",
+        "flatten": false,
+        "name": "Save Averages to Google Sheets",
+        "x": 480,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a0b5b6b3ae302244",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-google-sheets": "1.1.2"
+        }
+    }
+]

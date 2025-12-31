@@ -1,0 +1,667 @@
+{
+  "dashboard": {
+    "title": "Flight Analytics Dashboard",
+    "description": "Real-time flight tracking with automated 10-minute averages | Techwars Challenge",
+    "tags": ["aviation", "real-time", "analytics", "monitoring"],
+    "style": "dark",
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 2,
+        "title": "Global Flight Overview",
+        "type": "stat",
+        "datasource": {
+          "type": "grafana-googlesheets-datasource"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "spreadsheet": "1bvP4R9NxlxT4LW_E0E_AzIRfELTSdNXo4R-1wFSAtSI",
+            "range": "RealTime!B:B",
+            "cacheDurationSeconds": 30
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "green",
+                  "value": 0
+                },
+                {
+                  "color": "yellow",
+                  "value": 10000
+                },
+                {
+                  "color": "red",
+                  "value": 15000
+                }
+              ]
+            },
+            "color": {
+              "mode": "thresholds"
+            },
+            "unit": "short",
+            "decimals": 0,
+            "min": 0,
+            "max": 20000
+          }
+        },
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"],
+            "fields": ""
+          },
+          "orientation": "horizontal",
+          "textMode": "auto",
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto"
+        },
+        "pluginVersion": "10.4.2",
+        "gridPos": {
+          "h": 7,
+          "w": 8,
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": 3,
+        "title": "Current Flight Metrics",
+        "type": "stat",
+        "datasource": {
+          "type": "grafana-googlesheets-datasource"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "spreadsheet": "1bvP4R9NxlxT4LW_E0E_AzIRfELTSdNXo4R-1wFSAtSI",
+            "range": "RealTime!D:D",
+            "cacheDurationSeconds": 30
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "blue",
+                  "value": 0
+                },
+                {
+                  "color": "green",
+                  "value": 20000
+                },
+                {
+                  "color": "yellow",
+                  "value": 35000
+                },
+                {
+                  "color": "red",
+                  "value": 40000
+                }
+              ]
+            },
+            "color": {
+              "mode": "thresholds"
+            },
+            "unit": "lengthft",
+            "decimals": 0,
+            "min": 0,
+            "max": 50000
+          }
+        },
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"],
+            "fields": ""
+          },
+          "orientation": "horizontal",
+          "textMode": "auto",
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto"
+        },
+        "pluginVersion": "10.4.2",
+        "gridPos": {
+          "h": 7,
+          "w": 8,
+          "x": 8,
+          "y": 0
+        }
+      },
+      {
+        "id": 4,
+        "title": "Flight Speed",
+        "type": "stat",
+        "datasource": {
+          "type": "grafana-googlesheets-datasource"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "spreadsheet": "1bvP4R9NxlxT4LW_E0E_AzIRfELTSdNXo4R-1wFSAtSI",
+            "range": "RealTime!E:E",
+            "cacheDurationSeconds": 30
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [],
+            "thresholds": {
+              "steps": [
+                {
+                  "color": "blue",
+                  "value": 0
+                },
+                {
+                  "color": "green",
+                  "value": 300
+                },
+                {
+                  "color": "yellow",
+                  "value": 500
+                },
+                {
+                  "color": "red",
+                  "value": 600
+                }
+              ]
+            },
+            "color": {
+              "mode": "thresholds"
+            },
+            "unit": "velocitykts",
+            "decimals": 0,
+            "min": 0,
+            "max": 700
+          }
+        },
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"],
+            "fields": ""
+          },
+          "orientation": "horizontal",
+          "textMode": "auto",
+          "colorMode": "value",
+          "graphMode": "area",
+          "justifyMode": "auto"
+        },
+        "pluginVersion": "10.4.2",
+        "gridPos": {
+          "h": 7,
+          "w": 8,
+          "x": 16,
+          "y": 0
+        }
+      },
+      {
+        "id": 5,
+        "title": "Real-time Flight Altitude Trend",
+        "type": "timeseries",
+        "datasource": {
+          "type": "grafana-googlesheets-datasource"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "spreadsheet": "1bvP4R9NxlxT4LW_E0E_AzIRfELTSdNXo4R-1wFSAtSI",
+            "range": "RealTime!A:D",
+            "cacheDurationSeconds": 30
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "barAlignment": 0,
+              "lineWidth": 2,
+              "fillOpacity": 10,
+              "gradientMode": "opacity",
+              "spanNulls": false,
+              "showPoints": "auto",
+              "pointSize": 5,
+              "stacking": {
+                "mode": "none",
+                "group": "A"
+              },
+              "axisPlacement": "auto",
+              "axisLabel": "Altitude (feet)",
+              "axisColorMode": "text",
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "axisCenteredZero": false,
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "color": {
+              "mode": "palette-classic"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": 0
+                },
+                {
+                  "color": "red",
+                  "value": 40000
+                }
+              ]
+            },
+            "unit": "lengthft",
+            "decimals": 0
+          }
+        },
+        "options": {
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom",
+            "calcs": ["mean", "max", "min"]
+          }
+        },
+        "pluginVersion": "10.4.2",
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 0,
+          "y": 7
+        }
+      },
+      {
+        "id": 6,
+        "title": "Flight Speed Analysis",
+        "type": "timeseries",
+        "datasource": {
+          "type": "grafana-googlesheets-datasource"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "spreadsheet": "1bvP4R9NxlxT4LW_E0E_AzIRfELTSdNXo4R-1wFSAtSI",
+            "range": "RealTime!A:E",
+            "cacheDurationSeconds": 30
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "barAlignment": 0,
+              "lineWidth": 2,
+              "fillOpacity": 10,
+              "gradientMode": "opacity",
+              "spanNulls": false,
+              "showPoints": "auto",
+              "pointSize": 5,
+              "stacking": {
+                "mode": "none",
+                "group": "A"
+              },
+              "axisPlacement": "auto",
+              "axisLabel": "Speed (knots)",
+              "axisColorMode": "text",
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "axisCenteredZero": false,
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "color": {
+              "mode": "palette-classic"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "blue",
+                  "value": 0
+                },
+                {
+                  "color": "green",
+                  "value": 300
+                },
+                {
+                  "color": "yellow",
+                  "value": 500
+                }
+              ]
+            },
+            "unit": "velocitykts",
+            "decimals": 0
+          }
+        },
+        "options": {
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "legend": {
+            "displayMode": "list",
+            "placement": "bottom",
+            "calcs": ["mean", "max", "min"]
+          }
+        },
+        "pluginVersion": "10.4.2",
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 12,
+          "y": 7
+        }
+      },
+      {
+        "id": 7,
+        "title": "10-MINUTE AVERAGES ANALYSIS | TECHWARS CHALLENGE",
+        "description": "Automated calculation of flight metrics averages every 10 minutes",
+        "type": "timeseries",
+        "datasource": {
+          "type": "grafana-googlesheets-datasource"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "spreadsheet": "1bvP4R9NxlxT4LW_E0E_AzIRfELTSdNXo4R-1wFSAtSI",
+            "range": "Averages!A:C",
+            "cacheDurationSeconds": 600,
+            "alias": "Average Altitude"
+          },
+          {
+            "refId": "B",
+            "spreadsheet": "1bvP4R9NxlxT4LW_E0E_AzIRfELTSdNXo4R-1wFSAtSI",
+            "range": "Averages!A:B",
+            "cacheDurationSeconds": 600,
+            "alias": "Average Speed"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "drawStyle": "line",
+              "lineInterpolation": "smooth",
+              "barAlignment": 0,
+              "lineWidth": 3,
+              "fillOpacity": 15,
+              "gradientMode": "opacity",
+              "spanNulls": false,
+              "showPoints": "always",
+              "pointSize": 6,
+              "stacking": {
+                "mode": "none",
+                "group": "A"
+              },
+              "axisPlacement": "auto",
+              "axisLabel": "",
+              "axisColorMode": "text",
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "axisCenteredZero": false,
+              "hideFrom": {
+                "tooltip": false,
+                "viz": false,
+                "legend": false
+              },
+              "thresholdsStyle": {
+                "mode": "line+shadow"
+              }
+            },
+            "color": {
+              "mode": "palette-classic"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": 0
+                },
+                {
+                  "color": "yellow",
+                  "value": 30000
+                },
+                {
+                  "color": "red",
+                  "value": 35000
+                }
+              ]
+            },
+            "unit": "lengthft",
+            "decimals": 0
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Average Speed"
+              },
+              "properties": [
+                {
+                  "id": "unit",
+                  "value": "velocitykts"
+                },
+                {
+                  "id": "custom.lineWidth",
+                  "value": 3
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "purple",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Average Altitude"
+              },
+              "properties": [
+                {
+                  "id": "color",
+                  "value": {
+                    "fixedColor": "orange",
+                    "mode": "fixed"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "options": {
+          "tooltip": {
+            "mode": "multi",
+            "sort": "desc"
+          },
+          "legend": {
+            "displayMode": "table",
+            "placement": "bottom",
+            "calcs": ["mean", "last", "max", "min"],
+            "showLegend": true
+          }
+        },
+        "pluginVersion": "10.4.2",
+        "gridPos": {
+          "h": 10,
+          "w": 24,
+          "x": 0,
+          "y": 16
+        }
+      },
+      {
+        "id": 8,
+        "title": "Recent Flight Data",
+        "type": "table",
+        "datasource": {
+          "type": "grafana-googlesheets-datasource"
+        },
+        "targets": [
+          {
+            "refId": "A",
+            "spreadsheet": "1bvP4R9NxlxT4LW_E0E_AzIRfELTSdNXo4R-1wFSAtSI",
+            "range": "RealTime!A:F",
+            "cacheDurationSeconds": 30
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "custom": {
+              "align": "auto",
+              "displayMode": "auto",
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": 0
+                },
+                {
+                  "color": "red",
+                  "value": 40000
+                }
+              ]
+            },
+            "color": {
+              "mode": "thresholds"
+            },
+            "unit": "short",
+            "decimals": 0
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Timestamp"
+              },
+              "properties": [
+                {
+                  "id": "unit",
+                  "value": "dateTimeAsSystem"
+                },
+                {
+                  "id": "displayName",
+                  "value": "Time"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Altitude"
+              },
+              "properties": [
+                {
+                  "id": "unit",
+                  "value": "lengthft"
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Speed"
+              },
+              "properties": [
+                {
+                  "id": "unit",
+                  "value": "velocitykts"
+                }
+              ]
+            }
+          ]
+        },
+        "options": {
+          "showHeader": true,
+          "footer": {
+            "show": false,
+            "reducer": ["sum"],
+            "countRows": false
+          },
+          "sortBy": [
+            {
+              "displayName": "Timestamp",
+              "desc": true
+            }
+          ]
+        },
+        "pluginVersion": "10.4.2",
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {},
+              "indexByName": {},
+              "renameByName": {
+                "Timestamp": "Time",
+                "TotalFlights": "Global Count",
+                "FlightNumber": "Flight",
+                "Altitude": "Altitude (ft)",
+                "Speed": "Speed (kts)",
+                "Country": "Origin"
+              }
+            }
+          }
+        ],
+        "gridPos": {
+          "h": 12,
+          "w": 24,
+          "x": 0,
+          "y": 26
+        }
+      }
+    ],
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": ["5s", "10s", "30s", "1m", "5m", "15m", "30m", "1h", "2h", "1d"],
+      "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
+    },
+    "refresh": "30s",
+    "schemaVersion": 38,
+    "version": 1,
+    "links": [],
+    "gnetId": null
+  },
+  "folderUid": "general",
+  "message": "Dashboard imported successfully",
+  "overwrite": true
+}
