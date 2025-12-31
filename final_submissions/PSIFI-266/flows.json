@@ -1,0 +1,132 @@
+[
+    {
+        "id": "cf07d0e7f089f6fa",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c0093f7525b8c0be",
+        "type": "gauth",
+        "name": "nodered-sheets@assistant-28106.iam.gserviceaccount.com"
+    },
+    {
+        "id": "e49998e3c0cb4ced",
+        "type": "GSheet",
+        "z": "cf07d0e7f089f6fa",
+        "creds": "c0093f7525b8c0be",
+        "method": "append",
+        "action": "",
+        "sheet": "1tPuFnVRWIeB3RLmYrfaXXGMd9DeHISgzVCoUILL1xDI",
+        "cells": "Flight_Data!A:S",
+        "flatten": false,
+        "name": "",
+        "x": 870,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6e1c6df30ef51826",
+        "type": "inject",
+        "z": "cf07d0e7f089f6fa",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "15",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 160,
+        "wires": [
+            [
+                "eb78aa7e67b088d6",
+                "a93260a2427996f3"
+            ]
+        ]
+    },
+    {
+        "id": "7ca63066e05482c5",
+        "type": "function",
+        "z": "cf07d0e7f089f6fa",
+        "name": "function 1",
+        "func": "let states = msg.payload.states;\n\nif (!states || states.length === 0) return null;\n\nlet rows = [];\n\n// Limit to first 20 flights for safety\nstates.slice(0, 20).forEach(s => {\n    rows.push([\n        new Date().toISOString(),       // current timestamp\n        s[0],                           // icao24\n        s[1] ? s[1].trim() : \"\",        // callsign\n        s[2],                           // origin_country\n        s[3],                           // time_position\n        s[4],                           // last_contact\n        s[5],                           // longitude\n        s[6],                           // latitude\n        s[7],                           // baro_altitude\n        s[8],                           // on_ground\n        s[9],                           // velocity\n        s[10],                          // true_track\n        s[11],                          // vertical_rate\n        s[12] ? s[12].join(\",\") : \"\",  // sensors array as string\n        s[13],                          // geo_altitude\n        s[14],                          // squawk\n        s[15],                          // spi\n        s[16],                          // position_source\n        s[17]                           // category\n    ]);\n});\n\nmsg.payload = rows;\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 160,
+        "wires": [
+            [
+                "e49998e3c0cb4ced",
+                "a93260a2427996f3"
+            ]
+        ]
+    },
+    {
+        "id": "eb78aa7e67b088d6",
+        "type": "http request",
+        "z": "cf07d0e7f089f6fa",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://opensky-network.org/api/states/all",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 470,
+        "y": 80,
+        "wires": [
+            [
+                "7ca63066e05482c5",
+                "a93260a2427996f3"
+            ]
+        ]
+    },
+    {
+        "id": "a93260a2427996f3",
+        "type": "debug",
+        "z": "cf07d0e7f089f6fa",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "41cc2abbc47cef02",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-google-sheets": "1.1.2"
+        }
+    }
+]
