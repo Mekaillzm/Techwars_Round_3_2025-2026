@@ -1,0 +1,285 @@
+[
+    {
+        "id": "1d95bae1a940ca10",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "36dae2166a52cb20",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "332a7e6f18c82785",
+        "type": "MySQLdatabase",
+        "name": "grafana",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "grafana",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "c58f7a93d89491b8",
+        "type": "inject",
+        "z": "1d95bae1a940ca10",
+        "name": "Every 5 min",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "SELECT   DATE_FORMAT(call_date, '%Y-%m-%d %H:00:00') AS hour_ts,   COALESCE(campaign_id,'UNKNOWN') AS campaign_id,   COALESCE(user_group,'Unknown') AS user_group,   COALESCE(status,'UNKNOWN') AS status,   COUNT(*) AS call_count,   AVG(length_in_sec) AS avg_len FROM test_grafana WHERE call_date >= NOW() - INTERVAL 7 DAY GROUP BY hour_ts, campaign_id, user_group, status ORDER BY hour_ts;",
+        "payload": "object",
+        "payloadType": "date",
+        "x": 210,
+        "y": 80,
+        "wires": [
+            [
+                "e515898bb7f18bb8"
+            ]
+        ]
+    },
+    {
+        "id": "c475efc47690f95f",
+        "type": "mysql",
+        "z": "1d95bae1a940ca10",
+        "mydb": "332a7e6f18c82785",
+        "name": "dB",
+        "x": 530,
+        "y": 80,
+        "wires": [
+            [
+                "3b34503e36b37dcd",
+                "3aeb279364400773"
+            ]
+        ]
+    },
+    {
+        "id": "3aeb279364400773",
+        "type": "function",
+        "z": "1d95bae1a940ca10",
+        "name": "function 1",
+        "func": "const rows = msg.payload;\nif (!rows || rows.length === 0) return null;\n\nconst esc = (s) => String(s ?? '').replace(/'/g, \"''\");\n\nconst values = rows.map(r => (\n  `('${esc(r.hour_ts)}','${esc(r.campaign_id)}','${esc(r.user_group)}','${esc(r.status)}',${Number(r.call_count||0)},${Number(r.avg_len||0)})`\n)).join(\",\");\n\nmsg.topic = `\nINSERT INTO call_hourly_stats (hour_ts, campaign_id, user_group, status, call_count, avg_len)\nVALUES ${values}\nON DUPLICATE KEY UPDATE\n  call_count = VALUES(call_count),\n  avg_len = VALUES(avg_len);\n`;\n\nmsg.payload = [];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 80,
+        "wires": [
+            [
+                "2e331e4bba874e20"
+            ]
+        ]
+    },
+    {
+        "id": "2e331e4bba874e20",
+        "type": "mysql",
+        "z": "1d95bae1a940ca10",
+        "mydb": "332a7e6f18c82785",
+        "name": "dbwrite",
+        "x": 880,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e515898bb7f18bb8",
+        "type": "change",
+        "z": "1d95bae1a940ca10",
+        "name": "change",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "SELECT   DATE_FORMAT(call_date, '%Y-%m-%d %H:00:00') AS hour_ts,   COALESCE(campaign_id,'UNKNOWN') AS campaign_id,   COALESCE(user_group,'Unknown') AS user_group,   COALESCE(status,'UNKNOWN') AS status,   COUNT(*) AS call_count,   AVG(length_in_sec) AS avg_len FROM test_grafana WHERE call_date >= NOW() - INTERVAL 7 DAY GROUP BY hour_ts, campaign_id, user_group, status ORDER BY hour_ts;",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 80,
+        "wires": [
+            [
+                "c475efc47690f95f"
+            ]
+        ]
+    },
+    {
+        "id": "3b34503e36b37dcd",
+        "type": "debug",
+        "z": "1d95bae1a940ca10",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "8a70f4204e46ccf5",
+        "type": "inject",
+        "z": "36dae2166a52cb20",
+        "name": "Every 5 min",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "300",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "SELECT   DATE_FORMAT(call_date, '%Y-%m-%d %H:00:00') AS hour_ts,   COALESCE(campaign_id,'UNKNOWN') AS campaign_id,   COALESCE(user_group,'Unknown') AS user_group,   COALESCE(status,'UNKNOWN') AS status,   COUNT(*) AS call_count,   AVG(length_in_sec) AS avg_len FROM test_grafana WHERE call_date >= NOW() - INTERVAL 7 DAY GROUP BY hour_ts, campaign_id, user_group, status ORDER BY hour_ts;",
+        "payload": "object",
+        "payloadType": "date",
+        "x": 130,
+        "y": 80,
+        "wires": [
+            [
+                "1816fb8d3e468517"
+            ]
+        ]
+    },
+    {
+        "id": "1816fb8d3e468517",
+        "type": "function",
+        "z": "36dae2166a52cb20",
+        "name": "function 2",
+        "func": "\nconst ts = Date.now(); // ms epoch\nconst value = Math.round(80 + Math.random() * 140); // 80..220 (ms)\n\n// INSERT raw datapoint (parameterized)\nmsg.topic = `\n  INSERT INTO rt_metric (ts, value)\n  VALUES (FROM_UNIXTIME(?/1000), ?)\n`;\nmsg.payload = [ts, value];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 80,
+        "wires": [
+            [
+                "f9ce5489eeaf243f"
+            ]
+        ]
+    },
+    {
+        "id": "cf57a2096e01f12e",
+        "type": "mysql",
+        "z": "36dae2166a52cb20",
+        "mydb": "332a7e6f18c82785",
+        "name": "dB",
+        "x": 710,
+        "y": 80,
+        "wires": [
+            [
+                "22a24e6c95ce20bf"
+            ]
+        ]
+    },
+    {
+        "id": "f801df4e9df62a68",
+        "type": "function",
+        "z": "36dae2166a52cb20",
+        "name": "function 3",
+        "func": "msg.topic = `\n  SELECT\n    UNIX_TIMESTAMP(NOW())*1000 AS time,\n    AVG(value) AS avg_value,\n    COUNT(*) AS samples\n  FROM rt_metric\n  WHERE ts >= NOW() - INTERVAL 60 MINUTE\n`;\nmsg.payload = [];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 80,
+        "wires": [
+            [
+                "cf57a2096e01f12e"
+            ]
+        ]
+    },
+    {
+        "id": "f9ce5489eeaf243f",
+        "type": "mysql",
+        "z": "36dae2166a52cb20",
+        "mydb": "332a7e6f18c82785",
+        "name": "dbwrite",
+        "x": 440,
+        "y": 80,
+        "wires": [
+            [
+                "f801df4e9df62a68"
+            ]
+        ]
+    },
+    {
+        "id": "22a24e6c95ce20bf",
+        "type": "function",
+        "z": "36dae2166a52cb20",
+        "name": "function 4",
+        "func": "const row = (msg.payload && msg.payload[0]) ? msg.payload[0] : null;\nif (!row || row.avg_value == null) return null;\n\nconst ts = row.time; // ms epoch\nconst avg = Number(row.avg_value);\nconst samples = Number(row.samples || 0);\n\nmsg.topic = `\n  INSERT INTO rt_metric_avg (ts, window_minutes, avg_value, samples)\n  VALUES (FROM_UNIXTIME(?/1000), 60, ?, ?)\n  ON DUPLICATE KEY UPDATE\n    avg_value = VALUES(avg_value),\n    samples = VALUES(samples)\n`;\nmsg.payload = [ts, avg, samples];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 80,
+        "wires": [
+            [
+                "41cdcc2c989b6b9f"
+            ]
+        ]
+    },
+    {
+        "id": "41cdcc2c989b6b9f",
+        "type": "mysql",
+        "z": "36dae2166a52cb20",
+        "mydb": "332a7e6f18c82785",
+        "name": "dbwrite",
+        "x": 880,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3052b1b9d424621c",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-node-mysql": "3.0.0"
+        }
+    }
+]
