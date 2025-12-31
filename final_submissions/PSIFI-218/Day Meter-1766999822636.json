@@ -1,0 +1,622 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Ready to start your day? Not yet! Check your day meter!",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "uid": "ef8i6klwn8ni8a"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "afterRender": "",
+        "content": "<h2>😂 Joke of the Day</h2>\n<p><b>{{joke_setup}}</b></p>\n<p>{{joke_delivery}}</p>",
+        "contentPartials": [],
+        "defaultContent": "The query didn't return any results.",
+        "editor": {
+          "format": "auto",
+          "language": "html"
+        },
+        "editors": [],
+        "externalStyles": [],
+        "helpers": "",
+        "renderMode": "everyRow",
+        "styles": "",
+        "wrap": true
+      },
+      "pluginVersion": "6.2.0",
+      "targets": [
+        {
+          "refId": "A"
+        }
+      ],
+      "title": "Smile! It's a bright new day.",
+      "type": "marcusolsson-dynamictext-panel"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "ef8i6klwn8ni8a"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 8,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "afterRender": "",
+        "content": "<h2><b>💡 Advice</b></h2>\n<p>{{advice}}</p>",
+        "contentPartials": [],
+        "defaultContent": "The query didn't return any results.",
+        "editor": {
+          "format": "auto",
+          "language": "html"
+        },
+        "editors": [],
+        "externalStyles": [],
+        "helpers": "",
+        "renderMode": "everyRow",
+        "styles": "",
+        "wrap": true
+      },
+      "pluginVersion": "6.2.0",
+      "targets": [
+        {
+          "refId": "A"
+        }
+      ],
+      "title": "Start off your day with Greatness",
+      "type": "marcusolsson-dynamictext-panel"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "ef8i6klwn8ni8a"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 16,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "afterRender": "",
+        "content": "<h2><b>🧐 Fun Fact</b></h2>\n<p>{{fun_fact}}</p>",
+        "contentPartials": [],
+        "defaultContent": "The query didn't return any results.",
+        "editor": {
+          "format": "auto",
+          "language": "html"
+        },
+        "editors": [],
+        "externalStyles": [],
+        "helpers": "",
+        "renderMode": "everyRow",
+        "styles": "",
+        "wrap": true
+      },
+      "pluginVersion": "6.2.0",
+      "targets": [
+        {
+          "refId": "A"
+        }
+      ],
+      "title": "A fact a day keeps the boredom away",
+      "type": "marcusolsson-dynamictext-panel"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "ef8i6klwn8ni8a"
+      },
+      "description": "How much does Hamza love today?",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 10,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "orange",
+                "value": 2
+              },
+              {
+                "color": "dark-yellow",
+                "value": 4
+              },
+              {
+                "color": "light-yellow",
+                "value": 6
+              },
+              {
+                "color": "green",
+                "value": 8
+              },
+              {
+                "color": "dark-green",
+                "value": 9
+              },
+              {
+                "color": "dark-green",
+                "value": 10
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 8,
+        "x": 0,
+        "y": 4
+      },
+      "id": 1,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "columns": [],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "ef8i6klwn8ni8a"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "parser": "backend",
+          "refId": "A",
+          "root_selector": "hamza_meter",
+          "source": "url",
+          "type": "json",
+          "url": "",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "Hamza Meter",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "ef8i6klwn8ni8a"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 8,
+        "x": 8,
+        "y": 4
+      },
+      "id": 6,
+      "options": {
+        "afterRender": "",
+        "content": "<div style=\"\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  height: 100%;\n  text-align: center;\n  padding: 60px;\n\">\n\n  <h2 style=\"margin-bottom: 10px;\">\n    🎯 Activity of the Day\n  </h2>\n\n  <div style=\"\n    font-size: 26px;\n    font-weight: 700;\n    margin-bottom: 16px;\n  \">\n    {{bored_activity}}\n  </div>\n\n  <div style=\"\n    font-size: 16px;\n    line-height: 1.8;\n  \">\n    ⚡ <b>Availability:</b> {{bored_availability}}<br>\n    ⏱️ <b>Duration:</b> {{bored_duration}}<br>\n    💸 <b>Price:</b> {{bored_price}}\n  </div>\n\n</div>",
+        "contentPartials": [],
+        "defaultContent": "The query didn't return any results.",
+        "editor": {
+          "format": "auto",
+          "language": "html"
+        },
+        "editors": [],
+        "externalStyles": [],
+        "helpers": "",
+        "renderMode": "everyRow",
+        "styles": "",
+        "wrap": true
+      },
+      "pluginVersion": "6.2.0",
+      "targets": [
+        {
+          "refId": "A"
+        }
+      ],
+      "title": "",
+      "type": "marcusolsson-dynamictext-panel"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "ef8i6klwn8ni8a"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 8,
+        "x": 16,
+        "y": 4
+      },
+      "id": 5,
+      "options": {
+        "afterRender": "",
+        "content": "<div style=\"\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  height: 100%;\n  text-align: center;\n  padding: 60px;\n\">\n  <h2>📆 Days Passed</h2>\n  <div style=\"\n    font-size: 150px;\n    font-weight: 900;\n    line-height: 1;\n  \">\n    {{days_passed}}\n  </div>\n</div>",
+        "contentPartials": [],
+        "defaultContent": "The query didn't return any results.",
+        "editor": {
+          "format": "auto",
+          "language": "html"
+        },
+        "editors": [],
+        "externalStyles": [],
+        "helpers": "",
+        "renderMode": "everyRow",
+        "styles": "",
+        "wrap": true
+      },
+      "pluginVersion": "6.2.0",
+      "targets": [
+        {
+          "refId": "A"
+        }
+      ],
+      "title": "",
+      "type": "marcusolsson-dynamictext-panel"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "ef8i6klwn8ni8a"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "id": 7,
+      "options": {
+        "afterRender": "",
+        "content": "<div style=\"\n  width: 100%;\n  height: 100%;\n  display: flex;\n  justify-content: space-around;\n  align-items: center;\n  text-align: center;\n  font-family: sans-serif;\n  border-radius: 12px;\n  padding: 10px;\n\">\n\n  <!-- Temperature -->\n  <div style=\"flex:1; padding: 0 20px;\">\n    <div style=\"font-size: 20px; font-weight: 700; margin-bottom: 6px;\">\n      🌡️ Temperature\n    </div>\n    <div style=\"font-size: 60px; font-weight: 900; line-height: 1;\">\n      {{weather_temperature}}\n    </div>\n    <div style=\"font-size: 16px; opacity: 0.8;\">Temperature</div>\n  </div>\n\n  <!-- Divider -->\n  <div style=\"width:1px; background:#bbb; opacity:0.4;\"></div>\n\n  <!-- Humidity -->\n  <div style=\"flex:1; padding: 0 20px;\">\n    <div style=\"font-size: 20px; font-weight: 700; margin-bottom: 6px;\">\n      💧 Humidity\n    </div>\n    <div style=\"font-size: 60px; font-weight: 900; line-height:1;\">\n      {{weather_humidity}}\n    </div>\n    <div style=\"font-size: 16px; opacity:0.8;\">Humidity</div>\n  </div>\n\n  <!-- Divider -->\n  <div style=\"width:1px; background:#bbb; opacity:0.4;\"></div>\n\n  <!-- Wind Speed -->\n  <div style=\"flex:1; padding: 0 20px;\">\n    <div style=\"font-size: 20px; font-weight: 700; margin-bottom: 6px;\">\n      🌬️ Wind\n    </div>\n    <div style=\"font-size: 60px; font-weight: 900; line-height:1;\">\n      {{weather_wind_speed}}\n    </div>\n    <div style=\"font-size: 16px; opacity:0.8;\">Wind Speed</div>\n  </div>\n\n</div>",
+        "contentPartials": [],
+        "defaultContent": "The query didn't return any results.",
+        "editor": {
+          "format": "auto",
+          "language": "markdown"
+        },
+        "editors": [],
+        "externalStyles": [],
+        "helpers": "",
+        "renderMode": "everyRow",
+        "styles": "",
+        "wrap": true
+      },
+      "pluginVersion": "6.2.0",
+      "targets": [
+        {
+          "refId": "A"
+        }
+      ],
+      "title": "",
+      "type": "marcusolsson-dynamictext-panel"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "df8ix4eanq96of"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "columns": [
+            {
+              "selector": "time",
+              "text": "",
+              "timestampFormat": "2006-01-02T15:04:05Z07:00",
+              "type": "timestamp"
+            },
+            {
+              "selector": "value",
+              "text": "Hamza Level",
+              "type": "number"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "df8ix4eanq96of"
+          },
+          "filters": [],
+          "format": "dataframe",
+          "global_query_id": "",
+          "parser": "backend",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "http://localhost:1880/api/temps",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        },
+        {
+          "columns": [
+            {
+              "selector": "time",
+              "text": "",
+              "timestampFormat": "2006-01-02T15:04:05Z07:00",
+              "type": "timestamp"
+            },
+            {
+              "selector": "hamza_meter_avg",
+              "text": "Average Hamza Level",
+              "type": "number"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "df8ix4eanq96of"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "hide": false,
+          "parser": "backend",
+          "refId": "B",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "http://localhost:1880/api/temps/weekly",
+          "url_options": {
+            "data": "",
+            "method": "GET"
+          }
+        }
+      ],
+      "title": "Observe Hamza Level",
+      "type": "timeseries"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Day Meter",
+  "uid": "ad56l44",
+  "version": 17
+}

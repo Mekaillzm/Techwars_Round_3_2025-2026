@@ -1,0 +1,712 @@
+[
+    {
+        "id": "595562a63fbf7385",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c2bc3d7dad8e5855",
+        "type": "inject",
+        "z": "595562a63fbf7385",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "86400",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 147.0000228881836,
+        "y": 235.00000095367432,
+        "wires": [
+            [
+                "c88786b21f233df6",
+                "97c6dcd9c66275e4",
+                "18473026be63fd05",
+                "0095054ca8e4a61c",
+                "eaf86192d9b32cef"
+            ]
+        ]
+    },
+    {
+        "id": "c88786b21f233df6",
+        "type": "http request",
+        "z": "595562a63fbf7385",
+        "name": "Bored Api",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://bored-api.appbrewery.com/random",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 400,
+        "y": 160,
+        "wires": [
+            [
+                "224ca77512d8afcf"
+            ]
+        ],
+        "info": "Used to fetch data from the Bored API"
+    },
+    {
+        "id": "97c6dcd9c66275e4",
+        "type": "http request",
+        "z": "595562a63fbf7385",
+        "name": "Joke Api",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://v2.jokeapi.dev/joke/Any",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 400,
+        "y": 220,
+        "wires": [
+            [
+                "dc2fb8fbae030206"
+            ]
+        ],
+        "info": "Used to fetch data from the Joke API"
+    },
+    {
+        "id": "0095054ca8e4a61c",
+        "type": "http request",
+        "z": "595562a63fbf7385",
+        "name": "Advice Api",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://localhost:5560/advice",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 390,
+        "y": 280,
+        "wires": [
+            [
+                "9c9773c3b188f666"
+            ]
+        ],
+        "info": "Used to fetch data from the Advice API"
+    },
+    {
+        "id": "18473026be63fd05",
+        "type": "http request",
+        "z": "595562a63fbf7385",
+        "name": "Fun Fact Api",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://uselessfacts.jsph.pl/random.json?language=en",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 390,
+        "y": 340,
+        "wires": [
+            [
+                "e4e92a8a5b2b94a5"
+            ]
+        ],
+        "info": "Used to fetch data from the Fun Fact API"
+    },
+    {
+        "id": "a629fd02c5314f35",
+        "type": "change",
+        "z": "595562a63fbf7385",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "bored",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 160,
+        "wires": [
+            [
+                "ab70bd00bf3d5400"
+            ]
+        ]
+    },
+    {
+        "id": "7c7147d8af5d0c3e",
+        "type": "change",
+        "z": "595562a63fbf7385",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "joke",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 220,
+        "wires": [
+            [
+                "ab70bd00bf3d5400"
+            ]
+        ]
+    },
+    {
+        "id": "e3eb391d75be452c",
+        "type": "change",
+        "z": "595562a63fbf7385",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "advice",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 280,
+        "wires": [
+            [
+                "ab70bd00bf3d5400"
+            ]
+        ]
+    },
+    {
+        "id": "6354efb0ebe92856",
+        "type": "change",
+        "z": "595562a63fbf7385",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "funfact",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 340,
+        "wires": [
+            [
+                "ab70bd00bf3d5400"
+            ]
+        ]
+    },
+    {
+        "id": "ab70bd00bf3d5400",
+        "type": "join",
+        "z": "595562a63fbf7385",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "useparts": false,
+        "accumulate": true,
+        "timeout": "",
+        "count": "5",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 910,
+        "y": 280,
+        "wires": [
+            [
+                "ca22c633e4a4cb1d"
+            ]
+        ]
+    },
+    {
+        "id": "224ca77512d8afcf",
+        "type": "json",
+        "z": "595562a63fbf7385",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 530,
+        "y": 160,
+        "wires": [
+            [
+                "a629fd02c5314f35"
+            ]
+        ]
+    },
+    {
+        "id": "dc2fb8fbae030206",
+        "type": "json",
+        "z": "595562a63fbf7385",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 530,
+        "y": 220,
+        "wires": [
+            [
+                "7c7147d8af5d0c3e"
+            ]
+        ]
+    },
+    {
+        "id": "9c9773c3b188f666",
+        "type": "json",
+        "z": "595562a63fbf7385",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 530,
+        "y": 280,
+        "wires": [
+            [
+                "e3eb391d75be452c"
+            ]
+        ]
+    },
+    {
+        "id": "e4e92a8a5b2b94a5",
+        "type": "json",
+        "z": "595562a63fbf7385",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 530,
+        "y": 340,
+        "wires": [
+            [
+                "6354efb0ebe92856"
+            ]
+        ]
+    },
+    {
+        "id": "ca22c633e4a4cb1d",
+        "type": "function",
+        "z": "595562a63fbf7385",
+        "name": "function 1",
+        "func": "const startDate = new Date(\"2025-01-01T00:00:00Z\");\nconst today = new Date();\n\nconst daysPassed = Math.floor(\n    (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)\n);\n\nconst bored = msg.payload.bored;\n\nlet availability;\nif (bored.participants <= 1 && bored.price === 0) availability = \"Very Easy\";\nelse if (bored.price <= 0.3) availability = \"Easy\";\nelse availability = \"Moderate\";\n\nlet duration = bored.type === \"relaxation\" ? \"Short\"\n    : bored.type === \"recreational\" ? \"Medium\"\n        : \"Varies\";\n\nconst joke = msg.payload.joke;\nconst setup = joke.setup || \"\";\nconst delivery = joke.delivery || joke.joke || \"\";\n\nconst advice = msg.payload.advice.advice;\n\nconst funfact = msg.payload.funfact.text;\nconst hamzaMeter = Math.floor(Math.random() * 11)\nconst weatherMain = msg.payload.weather.weather[0].main\nconst temperature = msg.payload.weather.main.temp + \"°C\"\nconst humidity = msg.payload.weather.main.humidity + \"%\"\nconst windSpeed = msg.payload.weather.wind.speed + \"m/s\"\n\nmsg.payload = [\n    Date.now(),\n    bored.activity,\n    availability,\n    duration,\n    bored.price,\n    setup,\n    delivery,\n    advice,\n    funfact,\n    daysPassed,\n    hamzaMeter,\n    weatherMain,\n    temperature,\n    humidity,\n    windSpeed,\n];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 280,
+        "wires": [
+            [
+                "4e49f1c49f57de60",
+                "a93a3eaa4a781e1a"
+            ]
+        ]
+    },
+    {
+        "id": "4e49f1c49f57de60",
+        "type": "GSheet",
+        "z": "595562a63fbf7385",
+        "creds": "085c82aacb5c1401",
+        "method": "append",
+        "action": "",
+        "sheet": "1mddJez6hhxKKtefRcTWwTHWPJ1n8f_Be1ttRQ114X8w",
+        "cells": "Sheet1!A2:O1000",
+        "flatten": false,
+        "name": "DayStarter",
+        "x": 1190,
+        "y": 280,
+        "wires": [
+            []
+        ],
+        "inputLabels": [
+            "msg.payload"
+        ]
+    },
+    {
+        "id": "eaf86192d9b32cef",
+        "type": "http request",
+        "z": "595562a63fbf7385",
+        "name": "Weather Api",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://api.openweathermap.org/data/2.5/weather?q=Lahore&appid=df7c730cb9df4d5f9c001c26f294a5ec&units=metric",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 390,
+        "y": 400,
+        "wires": [
+            [
+                "c34f45b2f123604b"
+            ]
+        ],
+        "info": "Used to fetch data from the Fun Fact API"
+    },
+    {
+        "id": "c34f45b2f123604b",
+        "type": "json",
+        "z": "595562a63fbf7385",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 530,
+        "y": 400,
+        "wires": [
+            [
+                "a2031ed246e28ebc"
+            ]
+        ]
+    },
+    {
+        "id": "a2031ed246e28ebc",
+        "type": "change",
+        "z": "595562a63fbf7385",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "weather",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 400,
+        "wires": [
+            [
+                "ab70bd00bf3d5400"
+            ]
+        ]
+    },
+    {
+        "id": "a93a3eaa4a781e1a",
+        "type": "debug",
+        "z": "595562a63fbf7385",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "a4b4a3057e073cfa",
+        "type": "GSheet",
+        "z": "595562a63fbf7385",
+        "creds": "085c82aacb5c1401",
+        "method": "get",
+        "action": "",
+        "sheet": "1mddJez6hhxKKtefRcTWwTHWPJ1n8f_Be1ttRQ114X8w",
+        "cells": "Sheet1!A2:O1000",
+        "flatten": false,
+        "name": "DayStarter",
+        "x": 390,
+        "y": 520,
+        "wires": [
+            [
+                "4a86ff06837136af"
+            ]
+        ],
+        "inputLabels": [
+            "msg.payload"
+        ]
+    },
+    {
+        "id": "c163995786ef59fd",
+        "type": "http response",
+        "z": "595562a63fbf7385",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 740,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "302cf278b73979ef",
+        "type": "http in",
+        "z": "595562a63fbf7385",
+        "name": "Get Last Row",
+        "url": "/api/data",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 520,
+        "wires": [
+            [
+                "a4b4a3057e073cfa"
+            ]
+        ]
+    },
+    {
+        "id": "4a86ff06837136af",
+        "type": "function",
+        "z": "595562a63fbf7385",
+        "name": "function 2",
+        "func": "const row = msg.payload[msg.payload.length - 1];\n\nmsg.payload = {\n    date: row[0],\n\n    bored_activity: row[1],\n    bored_availability: row[2],\n    bored_duration: row[3],\n    bored_price: row[4],\n\n    joke_setup: row[5],\n    joke_delivery: row[6],\n\n    advice: row[7],\n    fun_fact: row[8],\n\n    days_passed: row[9],\n    hamza_meter: row[10],\n\n    weather_type: row[11],\n    weather_temperature: row[12],\n    weather_humidity: row[13],\n    weather_wind_speed: row[14]\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 520,
+        "wires": [
+            [
+                "c163995786ef59fd"
+            ]
+        ]
+    },
+    {
+        "id": "687f28c6832d6e5c",
+        "type": "http in",
+        "z": "595562a63fbf7385",
+        "name": "Get All Temp",
+        "url": "/api/temps",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 580,
+        "wires": [
+            [
+                "e33e32fcfa022ee8"
+            ]
+        ]
+    },
+    {
+        "id": "e33e32fcfa022ee8",
+        "type": "GSheet",
+        "z": "595562a63fbf7385",
+        "creds": "085c82aacb5c1401",
+        "method": "get",
+        "action": "",
+        "sheet": "1mddJez6hhxKKtefRcTWwTHWPJ1n8f_Be1ttRQ114X8w",
+        "cells": "Sheet1!A2:O1000",
+        "flatten": false,
+        "name": "DayStarter",
+        "x": 390,
+        "y": 580,
+        "wires": [
+            [
+                "42775b73a5477f2e"
+            ]
+        ],
+        "inputLabels": [
+            "msg.payload"
+        ]
+    },
+    {
+        "id": "42775b73a5477f2e",
+        "type": "function",
+        "z": "595562a63fbf7385",
+        "name": "function 3",
+        "func": "const rows = msg.payload; // each row from Google Sheets\nconst data = [];\n\nrows.forEach(row => {\n    // row[0] is timestamp\n    let ts = Number(row[0]);\n    if (isNaN(ts)) {\n        // fallback: try Date parsing if it's a string\n        ts = Date.parse(row[0]);\n    }\n\n    if (!isNaN(ts)) {\n        data.push({\n            time: new Date(ts).toISOString(),\n            metric: \"Hamza Meter\",\n            value: Number(row[10]) || 0 // row[10] = Hamza_Meter\n        });\n    } else {\n        node.warn(\"Skipping invalid timestamp: \" + row[0]);\n    }\n});\n\nmsg.payload = data;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 580,
+        "wires": [
+            [
+                "205cc2c16d31d19c"
+            ]
+        ]
+    },
+    {
+        "id": "205cc2c16d31d19c",
+        "type": "http response",
+        "z": "595562a63fbf7385",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 740,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "f2cd17fffd765371",
+        "type": "http in",
+        "z": "595562a63fbf7385",
+        "name": "Get All Temp Weekly",
+        "url": "/api/temps/weekly",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 640,
+        "wires": [
+            [
+                "34435ca77fb26f01"
+            ]
+        ]
+    },
+    {
+        "id": "34435ca77fb26f01",
+        "type": "GSheet",
+        "z": "595562a63fbf7385",
+        "creds": "085c82aacb5c1401",
+        "method": "get",
+        "action": "",
+        "sheet": "1mddJez6hhxKKtefRcTWwTHWPJ1n8f_Be1ttRQ114X8w",
+        "cells": "Sheet1!A2:O1000",
+        "flatten": false,
+        "name": "DayStarter",
+        "x": 390,
+        "y": 640,
+        "wires": [
+            [
+                "4650a3f6a8708153",
+                "3473b41b2cd6128c"
+            ]
+        ],
+        "inputLabels": [
+            "msg.payload"
+        ]
+    },
+    {
+        "id": "4650a3f6a8708153",
+        "type": "function",
+        "z": "595562a63fbf7385",
+        "name": "function 4",
+        "func": "const rows = msg.payload;\n\n// Defensive check\nif (!Array.isArray(rows) || rows.length === 0) return msg;\n\nfunction startOfWeek(ts) {\n    if (!ts) return null;\n\n    const d = new Date(ts);\n    if (isNaN(d.getTime())) return null;\n\n    const day = d.getUTCDay();\n    const diff = (day + 6) % 7;\n\n    d.setUTCHours(0, 0, 0, 0);\n    d.setUTCDate(d.getUTCDate() - diff);\n    return d.getTime();\n}\n\nconst buckets = {};\n\nrows.forEach(row => {\n    const timestamp = row[0];   // Date string\n    const meterValue = row[10]; // \"hamza_meter\" value\n\n    const bucket = startOfWeek(timestamp);\n\n    if (bucket !== null && meterValue !== undefined) {\n        if (!buckets[bucket]) buckets[bucket] = [];\n        buckets[bucket].push(Number(meterValue));\n    }\n});\n\nconst weeklyAvg = Object.keys(buckets).map(bucket => {\n    const values = buckets[bucket];\n    const sum = values.reduce((a, b) => a + b, 0);\n\n    return {\n        // Convert the epoch bucket back to an ISO string\n        time: new Date(Number(bucket)).toISOString(),\n        hamza_meter_avg: sum / values.length\n    };\n});\n\n// Sort chronologically\nweeklyAvg.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());\n\nmsg.payload = weeklyAvg;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 640,
+        "wires": [
+            [
+                "e9e38d2e5b1cc12b"
+            ]
+        ]
+    },
+    {
+        "id": "e9e38d2e5b1cc12b",
+        "type": "http response",
+        "z": "595562a63fbf7385",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 740,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "3473b41b2cd6128c",
+        "type": "debug",
+        "z": "595562a63fbf7385",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "085c82aacb5c1401",
+        "type": "gauth",
+        "name": "techwars@smiling-garden-314215.iam.gserviceaccount.com"
+    },
+    {
+        "id": "b8c71b318d249baf",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-google-sheets": "1.1.2"
+        }
+    }
+]
