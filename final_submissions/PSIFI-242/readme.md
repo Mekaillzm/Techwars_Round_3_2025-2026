@@ -1,5 +1,6 @@
 # CONTENT WARNING
 This submission may contain inappropriate and offensive content. Viewer discretion is advised.
+
 PSIFI, Techwars, and all associated parties do not promote, support or accept liability for any views shared by delegates.
 
 # Comments
