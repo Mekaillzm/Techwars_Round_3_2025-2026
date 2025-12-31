@@ -1,0 +1,945 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 0,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "uid": "ef8he820yu6tce"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-YlRd"
+          },
+          "custom": {
+            "align": "left",
+            "cellOptions": {
+              "type": "color-text"
+            },
+            "filterable": false,
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false,
+            "minWidth": 500,
+            "styleField": "Title",
+            "width": 500,
+            "wrapHeaderText": false,
+            "wrapText": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Title"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 232
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 5,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "cellHeight": "lg",
+        "enablePagination": false,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Title"
+          }
+        ]
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "range": "Sheet1!A1:J",
+          "refId": "A",
+          "spreadsheet": "1JqnWGmjtouOyVj5GJJ-xT6JGh3U3ZST4mIJdqIYSZCc"
+        }
+      ],
+      "title": "",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "ColorCode": true,
+              "Country": true,
+              "Description": true,
+              "Lat": true,
+              "Lon": true,
+              "PublishedAt": true,
+              "SentimentScore": true,
+              "URL": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Title": "Current News"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "Current News"
+              }
+            ]
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-googlesheets-datasource",
+        "uid": "ef8he820yu6tce"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [
+            {
+              "options": {
+                "#0000FF": {
+                  "color": "dark-blue",
+                  "index": 3
+                },
+                "#00FF00": {
+                  "color": "dark-green",
+                  "index": 2
+                },
+                "#FF0000": {
+                  "color": "dark-red",
+                  "index": 1
+                },
+                "#FFFF00": {
+                  "color": "dark-yellow",
+                  "index": 0,
+                  "text": "-"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 12,
+        "x": 5,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "basemap": {
+          "config": {
+            "server": "streets",
+            "showLabels": true,
+            "theme": "auto"
+          },
+          "name": "Layer 0",
+          "noRepeat": false,
+          "type": "default"
+        },
+        "controls": {
+          "mouseWheelZoom": true,
+          "showAttribution": true,
+          "showDebug": false,
+          "showMeasure": false,
+          "showScale": false,
+          "showZoom": true
+        },
+        "layers": [
+          {
+            "config": {
+              "showLegend": false,
+              "style": {
+                "color": {
+                  "field": "ColorCode",
+                  "fixed": "dark-green"
+                },
+                "opacity": 0.9,
+                "rotation": {
+                  "fixed": 0,
+                  "max": 360,
+                  "min": -360,
+                  "mode": "mod"
+                },
+                "size": {
+                  "fixed": 8,
+                  "max": 20,
+                  "min": 1
+                },
+                "symbol": {
+                  "fixed": "img/icons/marker/circle.svg",
+                  "mode": "fixed"
+                },
+                "symbolAlign": {
+                  "horizontal": "center",
+                  "vertical": "center"
+                },
+                "text": {
+                  "fixed": "",
+                  "mode": "field"
+                },
+                "textConfig": {
+                  "fontSize": 12,
+                  "offsetX": 0,
+                  "offsetY": 0,
+                  "textAlign": "center",
+                  "textBaseline": "middle"
+                }
+              }
+            },
+            "filterData": {
+              "id": "byRefId",
+              "options": "A"
+            },
+            "layer-tooltip": false,
+            "location": {
+              "latitude": "Lat",
+              "longitude": "Lon",
+              "mode": "coords"
+            },
+            "name": "Map",
+            "tooltip": true,
+            "type": "markers"
+          }
+        ],
+        "tooltip": {
+          "mode": "details"
+        },
+        "view": {
+          "allLayers": true,
+          "id": "zero",
+          "lat": 0,
+          "lon": 0,
+          "noRepeat": false,
+          "zoom": 1
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "cacheDurationSeconds": 60,
+          "datasource": {
+            "type": "grafana-googlesheets-datasource",
+            "uid": "ef8he820yu6tce"
+          },
+          "range": "Sheet1!A1:K200",
+          "refId": "A",
+          "spreadsheet": "1JqnWGmjtouOyVj5GJJ-xT6JGh3U3ZST4mIJdqIYSZCc"
+        },
+        {
+          "cacheDurationSeconds": 60,
+          "datasource": {
+            "type": "grafana-googlesheets-datasource",
+            "uid": "ef8he820yu6tce"
+          },
+          "hide": false,
+          "range": "Sheet2!A1:C10",
+          "refId": "B",
+          "spreadsheet": "1JqnWGmjtouOyVj5GJJ-xT6JGh3U3ZST4mIJdqIYSZCc"
+        }
+      ],
+      "title": "Recent Events",
+      "type": "geomap"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 5,
+        "x": 17,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": true,
+          "showMiniMap": true
+        },
+        "content": "<div style=\"font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 1px; border-radius: 8px; background: rgba(32, 34, 38, 0); border: 0px solid #444;\">\n  <h3 style=\"margin-top: 0; color: #ececec; border-bottom: 1px solid #555; padding-bottom: 5px;\">Situation Legend</h3>\n  \n  <div style=\"display: flex; flex-direction: column; gap: 10px;\">\n    \n    <div style=\"display: flex; align-items: center; gap: 12px;\">\n      <div style=\"width: 15px; height: 15px; background-color: #FF0000; border-radius: 50%; box-shadow: 0 0 0px #FF0000;\"></div>\n      <div>\n        <strong style=\"color: #FF4444;\">CRITICAL</strong>\n        <div style=\"font-size: 0.85em; color: #bbb;\">Major crises & disasters ( Rating <= -5 ) </div>\n      </div>\n    </div>\n\n    <div style=\"display: flex; align-items: center; gap: 12px;\">\n      <div style=\"width: 15px; height: 15px; background-color: #FFFF00; border-radius: 50%; box-shadow: 0 0 0px #FFFF00;\"></div>\n      <div>\n        <strong style=\"color: #FFFF44;\">NEGATIVE</strong>\n        <div style=\"font-size: 0.85em; color: #bbb;\">Minor incidents & trends ( -5 < Rating < 0 )</div>\n      </div>\n    </div>\n\n    <div style=\"display: flex; align-items: center; gap: 12px;\">\n      <div style=\"width: 15px; height: 15px; background-color: #0000FF; border-radius: 50%; box-shadow: 0 0 0px #0000FF;\"></div>\n      <div>\n        <strong style=\"color: #4444FF;\">NEUTRAL</strong>\n        <div style=\"font-size: 0.85em; color: #bbb;\">General updates ( 0 <= Rating < 5 )</div>\n      </div>\n    </div>\n\n    <div style=\"display: flex; align-items: center; gap: 12px;\">\n      <div style=\"width: 15px; height: 15px; background-color: #00FF00; border-radius: 50%; box-shadow: 0 0 0px #00FF00;\"></div>\n      <div>\n        <strong style=\"color: #44FF44;\">POSITIVE</strong>\n        <div style=\"font-size: 0.85em; color: #bbb;\">Good news & breakthroughs ( Rating >= 5)</div>\n      </div>\n    </div>\n\n  </div>\n</div>",
+        "mode": "html"
+      },
+      "pluginVersion": "12.3.1",
+      "title": "",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "grafana-googlesheets-datasource",
+        "uid": "af8hbmdhxmj9cf"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "displayName": "Active Regions",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "string"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 2,
+        "x": 22,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "limit": 8,
+          "values": true
+        },
+        "showPercentChange": false,
+        "text": {
+          "titleSize": 15
+        },
+        "textMode": "value_and_name",
+        "wideLayout": false
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "name": "Expression",
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "expression": "7",
+          "hide": false,
+          "refId": "B",
+          "type": "math"
+        }
+      ],
+      "title": "",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "grafana-googlesheets-datasource",
+        "uid": "ef8he820yu6tce"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [
+            {
+              "options": {
+                "ca": {
+                  "index": 6,
+                  "text": "CA"
+                },
+                "de": {
+                  "index": 2,
+                  "text": "DE"
+                },
+                "fr": {
+                  "index": 4,
+                  "text": "FR"
+                },
+                "gb": {
+                  "index": 1,
+                  "text": "UK"
+                },
+                "it": {
+                  "index": 3,
+                  "text": "IT"
+                },
+                "jp": {
+                  "index": 5,
+                  "text": "JP"
+                },
+                "us": {
+                  "index": 0,
+                  "text": "USA"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": 0
+              },
+              {
+                "color": "#EAB839",
+                "value": -1
+              },
+              {
+                "color": "dark-blue",
+                "value": 0
+              },
+              {
+                "color": "dark-green",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 7,
+        "x": 17,
+        "y": 7
+      },
+      "id": 5,
+      "options": {
+        "barRadius": 0.1,
+        "barWidth": 0.4,
+        "fullHighlight": false,
+        "groupWidth": 1,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "orientation": "vertical",
+        "showValue": "auto",
+        "stacking": "none",
+        "text": {},
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        },
+        "xField": "Country",
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "grafana-googlesheets-datasource",
+            "uid": "ef8he820yu6tce"
+          },
+          "range": "Sheet2!A1:C8",
+          "refId": "A",
+          "spreadsheet": "1JqnWGmjtouOyVj5GJJ-xT6JGh3U3ZST4mIJdqIYSZCc"
+        }
+      ],
+      "title": "Average Ratings Today",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Country": false,
+              "Total Cases": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "grafana-googlesheets-datasource",
+        "uid": "ef8he820yu6tce"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "text",
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "type": "color-text"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false,
+            "width": 120
+          },
+          "mappings": [
+            {
+              "options": {
+                "ca": {
+                  "index": 2,
+                  "text": "Canada"
+                },
+                "de": {
+                  "index": 5,
+                  "text": "Germany"
+                },
+                "fr": {
+                  "index": 4,
+                  "text": "France"
+                },
+                "gb": {
+                  "index": 3,
+                  "text": "UK"
+                },
+                "it": {
+                  "index": 6,
+                  "text": "Italy"
+                },
+                "jp": {
+                  "index": 0,
+                  "text": "Japan"
+                },
+                "us": {
+                  "index": 1,
+                  "text": "USA"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "dark-red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 5,
+        "x": 0,
+        "y": 10
+      },
+      "id": 6,
+      "options": {
+        "cellHeight": "sm",
+        "showHeader": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "grafana-googlesheets-datasource",
+            "uid": "ef8he820yu6tce"
+          },
+          "range": "Sheet2!A1:G8",
+          "refId": "A",
+          "spreadsheet": "1JqnWGmjtouOyVj5GJJ-xT6JGh3U3ZST4mIJdqIYSZCc"
+        }
+      ],
+      "title": "Recent Safety Rankings",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Average Rating": true,
+              "Country": false,
+              "Highest Rating": true,
+              "Lowest Rating": true,
+              "Sum of Ratings": true,
+              "Total Cases": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": false,
+                "field": "Ranking"
+              }
+            ]
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-googlesheets-datasource",
+        "uid": "ef8he820yu6tce"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 3,
+            "pointSize": 7,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [
+            {
+              "options": {
+                "ca": {
+                  "index": 0,
+                  "text": "CA"
+                },
+                "de": {
+                  "index": 1,
+                  "text": "DE"
+                },
+                "fr": {
+                  "index": 2,
+                  "text": "FR"
+                },
+                "gb": {
+                  "index": 3,
+                  "text": "UK"
+                },
+                "it": {
+                  "index": 4,
+                  "text": "IT"
+                },
+                "jp": {
+                  "index": 6,
+                  "text": "JP"
+                },
+                "us": {
+                  "index": 5,
+                  "text": "USA"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 7,
+        "x": 17,
+        "y": 12
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "cacheDurationSeconds": 300,
+          "datasource": {
+            "type": "grafana-googlesheets-datasource",
+            "uid": "ef8he820yu6tce"
+          },
+          "range": "Sheet3!A1:H",
+          "refId": "A",
+          "spreadsheet": "1JqnWGmjtouOyVj5GJJ-xT6JGh3U3ZST4mIJdqIYSZCc"
+        }
+      ],
+      "title": "Average Ratings over the last 7 days",
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "dateFormat": "YYYY-MM-DD",
+                "destinationType": "time",
+                "targetField": "Time"
+              }
+            ],
+            "fields": {}
+          }
+        },
+        {
+          "id": "prepareTimeSeries",
+          "options": {
+            "format": "multi"
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "uid": "ef8he820yu6tce"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-reds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 5,
+        "y": 15
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "background_solid",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {
+          "valueSize": 15
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "cacheDurationSeconds": 60,
+          "range": "Sheet1!C1:C",
+          "refId": "A",
+          "spreadsheet": "1JqnWGmjtouOyVj5GJJ-xT6JGh3U3ZST4mIJdqIYSZCc"
+        }
+      ],
+      "title": "Latest Breaking News",
+      "type": "stat"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 42,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "2025-12-25T08:55:48.970Z",
+    "to": "2025-12-29T04:59:24.300Z"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "PSIFI",
+  "uid": "adx9967",
+  "version": 89
+}

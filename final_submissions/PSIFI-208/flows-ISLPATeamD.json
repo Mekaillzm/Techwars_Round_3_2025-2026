@@ -1,0 +1,21 @@
+[
+    {
+        "id": "inject-news",
+        "type": "inject",
+        "z": "flow1",
+        "name": "Fetch News Every Hour",
+        "props": [],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "generate-countries"
+            ]
+        ]
+    }
+]
