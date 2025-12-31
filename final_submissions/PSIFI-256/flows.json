@@ -1,0 +1,236 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3b4eee15e09f0787",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "START",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 90,
+        "y": 200,
+        "wires": [
+            [
+                "6c48fb729c65bc1c"
+            ]
+        ]
+    },
+    {
+        "id": "6c48fb729c65bc1c",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "GET from API",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.openweathermap.org/data/2.5/weather?q=Lahore&appid=532edc1e9c5551da99c6136af70c144c",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 320,
+        "y": 200,
+        "wires": [
+            [
+                "68d5a8ef596b33f4"
+            ]
+        ]
+    },
+    {
+        "id": "883653f535b62262",
+        "type": "GSheet",
+        "z": "f6f2187d.f17ca8",
+        "creds": "4ae47625efac6021",
+        "method": "append",
+        "action": "",
+        "sheet": "1CuQKsTlIuaoOFttxsZRyVjlLJ0M5SMroQJx_2rs45Rc",
+        "cells": "Sheet1!A:J",
+        "flatten": false,
+        "name": "append to google doc",
+        "x": 980,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "68d5a8ef596b33f4",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "function 1",
+        "func": "const time = new Date();\n\nmsg.payload = [\n    [\n        time,\n        msg.payload.main.temp,\n        msg.payload.main.humidity,\n        msg.payload.main.feels_like,\n        msg.payload.weather[0].description,\n        msg.payload.wind.speed\n    ]\n];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 200,
+        "wires": [
+            [
+                "0bdcdd1f92401e46",
+                "883653f535b62262"
+            ]
+        ]
+    },
+    {
+        "id": "0bdcdd1f92401e46",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "074dc7eb2d58c525",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "600",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 400,
+        "wires": [
+            [
+                "3aec58e13ac065de"
+            ]
+        ]
+    },
+    {
+        "id": "3aec58e13ac065de",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.openweathermap.org/data/2.5/weather?q=Lahore&appid=532edc1e9c5551da99c6136af70c144c&units=metric",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 290,
+        "y": 400,
+        "wires": [
+            [
+                "e9437bac75c70469"
+            ]
+        ]
+    },
+    {
+        "id": "e9437bac75c70469",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "function 2",
+        "func": "msg.payload = {\n    temperature: msg.payload.main.temp,\n    timestamp: Date.now()\n};\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 380,
+        "wires": [
+            [
+                "cbddeae7941e27fa"
+            ]
+        ]
+    },
+    {
+        "id": "cbddeae7941e27fa",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "hourly avg temp",
+        "func": "// store temps in node context\nlet data = context.get(\"data\") || [];\n\ndata.push(msg.payload.temperature);\n\n// keep only last 6 readings (10 min × 6 = 1 hour)\nif (data.length > 6) {\n    data.shift();\n}\n\n// calculate average\nlet sum = data.reduce((a, b) => a + b, 0);\nlet avg = sum / data.length;\n\n// save back\ncontext.set(\"data\", data);\nconst time = new Date();\n\n// output average\nmsg.payload = [avg, time];\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 380,
+        "wires": [
+            [
+                "af7bc86ce2d37d2c"
+            ]
+        ]
+    },
+    {
+        "id": "af7bc86ce2d37d2c",
+        "type": "GSheet",
+        "z": "f6f2187d.f17ca8",
+        "creds": "4ae47625efac6021",
+        "method": "append",
+        "action": "",
+        "sheet": "1CuQKsTlIuaoOFttxsZRyVjlLJ0M5SMroQJx_2rs45Rc",
+        "cells": "Sheet2!A:G",
+        "flatten": false,
+        "name": "sheet2",
+        "x": 930,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4ae47625efac6021",
+        "type": "gauth",
+        "name": "myservice@psifi-techwars-r3.iam.gserviceaccount.com"
+    },
+    {
+        "id": "fdbee030e2da07de",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-google-sheets": "1.1.2"
+        }
+    }
+]
