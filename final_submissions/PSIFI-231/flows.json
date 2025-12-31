@@ -1,0 +1,22 @@
+[
+    {
+        "id": "fb6a39a06907ef6a",
+        "type": "function",
+        "z": "91e14c185921c2d4",
+        "name": "function 1",
+        "func": "msg.payload = global.get(\"latestWeather\") || [];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 380,
+        "wires": [
+            [
+                "8d3f811883c4247a"
+            ]
+        ]
+    }
+]
