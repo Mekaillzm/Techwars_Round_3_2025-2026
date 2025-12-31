@@ -1,0 +1,112 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3b4eee15e09f0787",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "START",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "300",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 200,
+        "wires": [
+            [
+                "6c48fb729c65bc1c"
+            ]
+        ]
+    },
+    {
+        "id": "883653f535b62262",
+        "type": "GSheet",
+        "z": "f6f2187d.f17ca8",
+        "creds": "c63c4b539cd1d45e",
+        "method": "append",
+        "action": "",
+        "sheet": "1Mn4Xt3_wc94dimaY75PDCfXoC5qVfMQ5qh7GW59oyWo",
+        "cells": "Sheet1!A:H",
+        "flatten": false,
+        "name": "Append to Google Sheet",
+        "x": 730,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7aa777e6b9ae7918",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Parse HTTP",
+        "func": "let rows = [];\n\nif (!msg.payload || typeof msg.payload !== \"object\") {\n  node.error(\"Invalid payload\");\n  return null;\n}\n\nconst d = msg.payload.data;\n\n// Safe helper\nconst v = (obj, key) => obj && obj[key] ? obj[key].v : \"\";\n\n// Build one spreadsheet row\nrows.push([\n  d.time?.iso || \"\",                     // Timestamp\n  d.city?.name || \"\",                    // City name\n  d.city?.geo?.[0] || \"\",                // Latitude\n  d.city?.geo?.[1] || \"\",                // Longitude\n  d.aqi ?? \"\",                           // AQI\n  d.dominentpol || \"\",                   // Dominant pollutant\n\n  v(d.iaqi, \"co\"),                       // CO\n  v(d.iaqi, \"no2\"),                      // NO2\n  v(d.iaqi, \"o3\"),                       // O3\n  v(d.iaqi, \"pm10\"),                     // PM10\n  v(d.iaqi, \"pm25\"),                     // PM2.5\n  v(d.iaqi, \"so2\"),                      // SO2\n  v(d.iaqi, \"t\"),                        // Temperature\n  v(d.iaqi, \"h\"),                        // Humidity\n  v(d.iaqi, \"w\"),                        // Wind speed\n]);\n\nmsg.payload = rows;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 200,
+        "wires": [
+            [
+                "883653f535b62262"
+            ]
+        ]
+    },
+    {
+        "id": "6c48fb729c65bc1c",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "GET from API",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.waqi.info/feed/Lahore/?token=b48e45162cf346483c347b577fcd1b6520d1a945",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 280,
+        "y": 200,
+        "wires": [
+            [
+                "7aa777e6b9ae7918"
+            ]
+        ]
+    },
+    {
+        "id": "c63c4b539cd1d45e",
+        "type": "gauth",
+        "name": "muhammad-ahmad-mirza@techwars-r3.iam.gserviceaccount.com"
+    },
+    {
+        "id": "6a14586e8f56bba8",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-google-sheets": "1.1.2"
+        }
+    }
+]
