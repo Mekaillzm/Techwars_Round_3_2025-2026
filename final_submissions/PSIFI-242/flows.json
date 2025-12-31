@@ -1,0 +1,129 @@
+[
+    {
+        "id": "07ec0423b5d26007",
+        "type": "discordMessage",
+        "z": "36c1c687e1f058c8",
+        "name": "",
+        "channelIdFilter": "",
+        "token": "",
+        "x": 280,
+        "y": 180,
+        "wires": [
+            [
+                "f66fe4933c1325b3",
+                "4d9f0e32bf321ca2"
+            ]
+        ]
+    },
+    {
+        "id": "c1a58385f318d060",
+        "type": "GSheet",
+        "z": "36c1c687e1f058c8",
+        "creds": "32ac41673d88afb3",
+        "method": "append",
+        "action": "",
+        "sheet": "1zYKMUIvuim1NgMDptRcn0HiV8-nnq2CE13CL2e-MMWM",
+        "cells": "Sheet1!A2",
+        "flatten": false,
+        "name": "",
+        "x": 690,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7b11ca28c24b9dbf",
+        "type": "function",
+        "z": "36c1c687e1f058c8",
+        "name": "function 1",
+        "func": "// This creates a row: [Timestamp, User, Message, Sentiment_Score] \nmsg.payload = [\n    new Date().toLocaleString(),\n    msg.author.username || \"Unknown\",\n    msg.author.id || \"Unknown\",\n    msg.payload || msg.content || \"Empty Message\", // Checks both common fields\n    msg.sentiment ? msg.sentiment.score : 0 // Safe check for sentiment \n]; return msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 440,
+        "wires": [
+            [
+                "c1a58385f318d060"
+            ]
+        ]
+    },
+    {
+        "id": "f66fe4933c1325b3",
+        "type": "sentiment",
+        "z": "36c1c687e1f058c8",
+        "name": "",
+        "property": "payload",
+        "x": 460,
+        "y": 360,
+        "wires": [
+            [
+                "7b11ca28c24b9dbf"
+            ]
+        ]
+    },
+    {
+        "id": "4d9f0e32bf321ca2",
+        "type": "trigger",
+        "z": "36c1c687e1f058c8",
+        "name": "",
+        "op1": "\"timeout\"",
+        "op2": "",
+        "op1type": "str",
+        "op2type": "payl",
+        "duration": "1",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 700,
+        "y": 280,
+        "wires": [
+            [
+                "bcbf82dd018d02ad"
+            ]
+        ]
+    },
+    {
+        "id": "bcbf82dd018d02ad",
+        "type": "function",
+        "z": "36c1c687e1f058c8",
+        "name": "function 3",
+        "func": "// Get the current date\nlet now = new Date();\n\n// Manually format to MM/DD/YYYY HH:MM:SS\nlet timestamp = (now.getMonth() + 1).toString().padStart(2, '0') + '/' +\n                now.getDate().toString().padStart(2, '0') + '/' +\n                now.getFullYear() + ' ' +\n                now.getHours().toString().padStart(2, '0') + ':' +\n                now.getMinutes().toString().padStart(2, '0') + ':' +\n                now.getSeconds().toString().padStart(2, '0');\n\n// Create the 5-column array matching your sheet\n// [Timestamp, User, User_ID, Message, Sentiment_Score]\nmsg.payload = [\n    timestamp,      // Col 1: MM/DD/YYYY HH:MM:SS\n    null,           // Col 2: User\n    null,           // Col 3: User_ID\n    \"NO_ACTIVITY\",  // Col 4: Message\n    null            // Col 5: Sentiment_Score\n];\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 520,
+        "wires": [
+            [
+                "c1a58385f318d060"
+            ]
+        ]
+    },
+    {
+        "id": "32ac41673d88afb3",
+        "type": "gauth",
+        "name": "kazuki@mynewproject-482620.iam.gserviceaccount.com"
+    },
+    {
+        "id": "109af8cc0d0f1215",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-discord-advanced": "3.6.0",
+            "node-red-contrib-google-sheets": "1.1.2",
+            "node-red-node-sentiment": "0.1.6"
+        }
+    }
+]
