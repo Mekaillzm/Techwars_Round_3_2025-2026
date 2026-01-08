@@ -1,1 +1,1 @@
-archival content of other rounds (1, 2 & 3)
+archival content of all rounds (1, 2 & 3)
